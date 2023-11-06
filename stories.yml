@@ -1,0 +1,57 @@
+version: "3.1"
+
+stories:
+
+- story: happy path with sad path
+  steps:
+  - intent: greet_happy
+  - action: utter_greet
+  - action: utter_how_you_feel
+
+- story: Sad Path
+  steps:
+  - intent: greet_sad
+  - action: utter_greet
+  - action: utter_cheer_up
+  - action: action_enviar_juego
+
+- story: Recomendar juego cuando el usuario lo pide
+  steps:
+  - intent: ask_for_game
+  - action: utter_ask_for_game
+  - intent: nombrar_genero
+  - action: action_obtener_juegos_por_genero
+
+- story: Recomendar juego personalizado
+  steps:
+  - intent: atencion_personalizada
+  - action: utter_ask_console
+
+- story: Sirvio como ayuda
+  steps:
+  - action: utter_did_that_help
+  - intent: affirm
+  - action: utter_help_yes
+
+- story: Recomendacion segun la critica
+  steps:
+  - intent: juego_segun_la_critica
+  - action: action_recomendacion_segun_critica
+
+- story: Comprar juego
+  steps:
+  - intent: buy_actual_game
+  - action: mostrar_link_juego
+
+- story: Buscar juego
+  steps:
+  - intent: search_actual_game
+  - action: mostrar_descripcion_juego
+
+- story: Save user edad
+  steps:
+  - intent: give_user_edad
+  - action: action_edad
+  - action: utter_slots_values_edad
+
+  
