@@ -1,0 +1,170 @@
+version: "3.1"
+
+rules:
+  - rule: Say goodbye anytime the user says goodbye with or without name
+    steps:
+      - intent: goodbye
+      - action: action_goodbye
+
+  - rule: Say 'I am a bot' anytime the user challenges
+    steps:
+    - intent: bot_challenge
+    - action: utter_laugh
+    - action: utter_iamabot
+
+  - rule: Decir de nada al recibir muchas gracias
+    steps:
+    - intent: agradecer
+    - action: utter_welcome
+    - action: utter_did_that_help
+
+  - rule: Activate form
+    steps:
+    - intent: give_username
+    - action: vaciar_user_name
+    - action: name_form
+    - active_loop: name_form
+
+  - rule: Submite form
+    condition:
+    - active_loop: name_form
+    steps:
+    - action: name_form
+    - active_loop: null
+    - slot_was_set:
+      - requested_slot: null
+    - action: utter_slots_values
+
+  - rule: Continuar ciclo en "Recomendar juego personalizado" 1
+    steps:
+    - action: action_preguntar_juego
+    - intent: affirm
+    - action: action_cambiar_gusto_juego
+    - action: action_preguntar_juego
+
+  - rule: Continuar ciclo en "Recomendar juego personalizado" 2
+    steps:
+    - action: action_preguntar_juego
+    - intent: deny
+    - action: action_cambiar_gusto_juego
+    - action: action_preguntar_juego
+
+  - rule: Seguir preguntando acerca de juegos
+    steps:
+    - intent: seguir_respondiendo
+    - action: utter_ask_continuar_atencion_personalizada
+    - action: action_preguntar_juego
+
+  - rule: Nueva recomendacion
+    steps:
+    - intent: recomendacion_personalizada
+    - action: action_usar_modelo
+
+  - rule: Contestar por como me siento
+    steps:
+      - intent: how_you_feel
+      - action: utter_im_fine
+
+  - rule: Save user name
+    steps:
+    - intent: give_direct_username
+    - action: vaciar_user_name
+    - action: action_username
+
+  - rule: Save user
+    steps:
+    - intent: guardar_usuario
+    - action: action_guardar_datos_usuario
+
+  - rule: load user
+    steps:
+    - intent: cargar_usuario
+    - action: action_cargar_datos_usuarios
+
+  - rule: load user
+    steps:
+    - intent: ver_datos
+    - action: action_ver_datos
+    
+  - rule: si ayudo
+    steps:
+    - action: utter_did_that_help
+    - intent: affirm
+    - action: utter_help_yes
+
+  - rule: no ayudo
+    steps:
+    - action: utter_did_that_help
+    - intent: deny
+    - action: utter_help_no 
+
+  - rule: se siente feliz
+    steps:
+    - action: utter_how_you_feel
+    - intent: mood_great
+    - action: utter_happy
+
+  - rule: se siente triste
+    steps:
+    - action: utter_how_you_feel
+    - intent: mood_unhappy
+    - action: utter_cheer_up
+    - action: action_enviar_juego
+    - action: utter_did_that_help
+
+  - rule: Consola guardar 1
+    steps: 
+    - action: utter_ask_console
+    - intent: xbox_console
+    - action: action_save_console
+    - action: utter_ask_atencion_personalizada
+    - action: action_preguntar_juego
+  
+  - rule: Consola guardar 2
+    steps: 
+    - action: utter_ask_console
+    - intent: pc_console
+    - action: action_save_console
+    - action: utter_ask_atencion_personalizada
+    - action: action_preguntar_juego
+
+  - rule: Consola guardar 3
+    steps: 
+    - action: utter_ask_console
+    - intent: playstation_console
+    - action: action_save_console
+    - action: utter_ask_atencion_personalizada
+    - action: action_preguntar_juego
+
+  - rule: Consola guardar 4
+    steps: 
+    - action: utter_ask_console
+    - intent: nintendo_console
+    - action: action_save_console
+    - action: utter_ask_atencion_personalizada
+    - action: action_preguntar_juego
+
+  - rule: No lo he entendido
+    steps:
+    - intent: nlu_fallback
+    - action: utter_ask_again
+
+  - rule: El usuario jugo a un juego
+    steps:
+    - intent: jugue_a_tal_juego
+    - action: action_search_game
+  
+  - rule: Cambiar el gusto
+    steps:
+    - action: action_search_game
+    - intent: affirm
+    - action: action_cambiar_gusto_juego2
+    - action: utter_recordare_que_te_gusto
+
+  - rule: Cambiar el gusto
+    steps:
+    - action: action_search_game
+    - intent: deny
+    - action: action_cambiar_gusto_juego2
+    - action: utter_recordare_que_no_te_gusto
+    
