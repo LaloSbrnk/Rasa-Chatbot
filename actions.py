@@ -103,7 +103,19 @@ def modelar_y_visualizar_arbol(csv_file,cantidad):
         print("Cantidad de filas tomadas:")
         print(cantidad)
         x = x.head(cantidad)
-        y = y.head(cantidad)      
+        y = y.head(cantidad)
+        numero_juego = tracker.get_slot('numero_juego')
+         if numero_juego != none:
+        #         for _ in range(numero_juego):
+        #         try:
+        #             index, row = next(iterador_filas)
+        #         except StopIteration:                 
+        #             break
+        #     index, row = next(iterador_filas)
+            fila_seleccionada = dfAux.drop(columns=dfAux.columns[0]).iloc[numero]
+            fila_seleccionada = fila_seleccionada.values.reshape(1, -1)
+            x = x.append(fila_seleccionada)
+            y = y.append(fila_seleccionada)
         model = DecisionTreeClassifier(max_depth=15)   
         model.fit(x, y)       
         dot_data = tree.export_graphviz(model, out_file=None,
