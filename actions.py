@@ -564,7 +564,7 @@ class BuscarJuegoAction(Action):
 
     def run(self, dispatcher, tracker, domain):
         try:
-            mensaje = tracker.get_slot("juego")
+            mensaje = tracker.latest_message.get("text")
             print(mensaje)
             print("entra")
             nombre_juego, indice_juego = buscar_juego_similar(mensaje)
